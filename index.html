@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex</title>
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Chalarangelo/mini.css/v3.0.1/dist/mini-default.min.css">
+    <link rel="stylesheet" href="/complex/index.css">
+</head>
+<body>
+  <form class="user-block user-block_form" method="get">
+    <input class="user-block user-block_input-first" placeholder="Введите число..." type="number">
+    <div class="user-block user-block_plus">+</div>
+    <input class="user-block user-block_input-second" placeholder="Введите число..." type="number">
+    <button class="user-block user-block_button" type="submit">
+      <div class="user-block user-block_loader hidden"></div>
+      Вычислить
+    </button>
+  </form>
+  <div class="result">
+    <p class="result result_text-result"></p>
+    <div class="result result_error"></div>
+  </div>
+  <script>
+    debugger
+    const userBlockForm = document.querySelector('.user-block_form');
+    const userBlockInputFirs = document.querySelector('.user-block_input-first');
+    const userBlockInputSecond = document.querySelector('.user-block_input-second');
+    const userBlockButton = document.querySelector('.user-block_button');
+    const userBlockLoader = document.querySelector('.user-block_loader');
+    const resultTextResult = document.querySelector('.result_text-result');
+    const resultError = document.querySelector('.result_error');
+    
+    userBlockForm.addEventListener('submit', (event) => {
+      event.preventDefault();
+      const userInputFirst = userBlockInputFirs.value;
+      const userInputSecond = userBlockInputSecond.value;
+
+      userBlockButton.disabled = true;
+      userBlockLoader.classList.remove('hidden');
+      userBlockButton.classList.add('hidden-text');
+      resultTextResult.textContent = '';
+      resultError.textContent = '';
+      
+      fetch(`http://localhost:3000/?first=${userInputFirst}&second=${userInputSecond}`)
+        .then(response => response.json())
+        .then(data => {
+          const answerServer = data.result;
+          resultTextResult.textContent = `Ответ: ${answerServer}`;
+            })
+        .catch((error) => {
+          resultError.textContent = `Ошибка попробуйте еще (${error.message})`;
+          })
+        .finally(() => {
+          userBlockButton.disabled = false;
+          userBlockButton.classList.remove('hidden-text');
+          userBlockLoader.classList.add('hidden');
+        })
+    });
+  </script>
+</body>
+</html>
