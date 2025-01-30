@@ -23,7 +23,7 @@
   </div>
   <script>
     const userBlockForm = document.querySelector('.user-block_form');
-    const userBlockInputFirs = document.querySelector('.user-block_input-first');
+    const userBlockInputFirst = document.querySelector('.user-block_input-first');
     const userBlockInputSecond = document.querySelector('.user-block_input-second');
     const userBlockButton = document.querySelector('.user-block_button');
     const userBlockLoader = document.querySelector('.user-block_loader');
@@ -32,7 +32,7 @@
     
     userBlockForm.addEventListener('submit', (event) => {
       event.preventDefault();
-      const userInputFirst = userBlockInputFirs.value;
+      const userInputFirst = userBlockInputFirst.value;
       const userInputSecond = userBlockInputSecond.value;
 
       userBlockButton.disabled = true;
